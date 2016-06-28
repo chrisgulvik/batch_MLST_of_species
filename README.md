@@ -31,11 +31,12 @@ Step 1 - Download profile and corresponding alleles:
 Step 2 - Get all allele sequences for each ST
 
     get_allele_seqs_from_PubMLST_db.py -p cdifficile.txt
-    `cat concat_ST-*.fas > 334_Cdiff_concat_MLSTs.fa`
-    `rm *.fas`
+    ls concat_ST-*.fas | xargs cat > 351_Cdiff_concat_MLSTs.fa
+    rm *.fas
 
 Step 3 - Align and infer phylogeny
 
-    muscle -in 334_Cdiff_concat_MLSTs.fa -out 334_Cdiff_concat_MLSTs.fa.aln
-    python ~/scripts/fasta2phylip.py 334_Cdiff_concat_MLSTs.fa.aln 334_Cdiff_concat_MLSTs.aln.phy
-    raxmlHPC-PTHREADS -T 30 -f a -s 334_Cdiff_concat_MLSTs.aln.phy -n Cdiff_concat_MLSTs -p 654321 -x 54321 -N 100 -m GTRGAMMA
+    muscle -in 351_Cdiff_concat_MLSTs.fa -out 351_Cdiff_concat_MLSTs.fa.aln
+    python ~/scripts/fasta2phylip.py 351_Cdiff_concat_MLSTs.fa.aln 351_Cdiff_concat_MLSTs.aln.phy
+    # collapse invariant sites
+    raxmlHPC-PTHREADS -T 30 -f a -s 351_Cdiff_concat_MLSTs.aln.phy -n Cdiff_concat_MLSTs -p 654321 -x 54321 -N 100 -m GTRGAMMA
